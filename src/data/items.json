@@ -1,0 +1,138 @@
+[
+  {
+    "id": "charger",
+    "name": "Charger or cable",
+    "replacePrice": 2500,
+    "recyclability": 0.7,
+    "applicableFlags": ["exposedWiring"],
+    "symptoms": {
+      "power":        { "fixability": 0.4, "repairCost": 1800, "repairMinutes": 90, "skill": 3 },
+      "physical":     { "fixability": 0.9, "repairCost": 300,  "repairMinutes": 20, "skill": 1 },
+      "intermittent": { "fixability": 0.7, "repairCost": 400,  "repairMinutes": 30, "skill": 2 },
+      "cosmetic":     { "fixability": 0.95,"repairCost": 100,  "repairMinutes": 10, "skill": 1 }
+    },
+    "reuse": ["Keep as a spare"],
+    "repurpose": ["Use the cable as a plant tie"],
+    "dropOff": "E-waste collection point",
+    "repairPointer": "Local electronics repair shop"
+  },
+  {
+    "id": "laptop",
+    "name": "Laptop",
+    "replacePrice": 55000,
+    "recyclability": 0.85,
+    "applicableFlags": ["swollenBattery", "exposedWiring", "burningSmell"],
+    "symptoms": {
+      "power":        { "fixability": 0.5,  "repairCost": 12000, "repairMinutes": 180, "skill": 4 },
+      "physical":     { "fixability": 0.75, "repairCost": 7500,  "repairMinutes": 120, "skill": 3 },
+      "intermittent": { "fixability": 0.6,  "repairCost": 5500,  "repairMinutes": 90,  "skill": 3 },
+      "cosmetic":     { "fixability": 0.9,  "repairCost": 3000,  "repairMinutes": 45,  "skill": 2 }
+    },
+    "reuse": ["Use as a home server or secondary display terminal", "Donate to a student"],
+    "repurpose": ["Remove storage drive for external USB drive", "Salvage LCD panel for a standalone monitor"],
+    "dropOff": "Certified e-waste collection centre",
+    "repairPointer": "Authorised laptop service centre"
+  },
+  {
+    "id": "phone",
+    "name": "Smartphone",
+    "replacePrice": 20000,
+    "recyclability": 0.75,
+    "applicableFlags": ["swollenBattery", "burningSmell"],
+    "symptoms": {
+      "power":        { "fixability": 0.15, "repairCost": 9000, "repairMinutes": 120, "skill": 4 },
+      "physical":     { "fixability": 0.7,  "repairCost": 4500, "repairMinutes": 60,  "skill": 3 },
+      "intermittent": { "fixability": 0.55, "repairCost": 3200, "repairMinutes": 45,  "skill": 2 },
+      "cosmetic":     { "fixability": 0.85, "repairCost": 1500, "repairMinutes": 30,  "skill": 1 }
+    },
+    "reuse": ["Use as a dedicated offline music player or dashcam", "Keep as an emergency backup handset"],
+    "repurpose": ["Convert into a home security camera with an app", "Set up as a dedicated smart desk clock"],
+    "dropOff": "Electronics brand retail takeback kiosk",
+    "repairPointer": "Local smartphone repair specialist"
+  },
+  {
+    "id": "headphones",
+    "name": "Headphones",
+    "replacePrice": 3000,
+    "recyclability": 0.65,
+    "applicableFlags": ["swollenBattery", "exposedWiring"],
+    "symptoms": {
+      "power":        { "fixability": 0.35, "repairCost": 1200, "repairMinutes": 60, "skill": 3 },
+      "physical":     { "fixability": 0.65, "repairCost": 600,  "repairMinutes": 30, "skill": 2 },
+      "intermittent": { "fixability": 0.6,  "repairCost": 450,  "repairMinutes": 35, "skill": 2 },
+      "cosmetic":     { "fixability": 0.9,  "repairCost": 250,  "repairMinutes": 15, "skill": 1 }
+    },
+    "reuse": ["Use as wired headphones for desktop PC or gym"],
+    "repurpose": ["Salvage magnets and speaker drivers for hobby audio projects"],
+    "dropOff": "Small electronics recycling bin",
+    "repairPointer": "Audio gear repair technician or DIY soldering guide"
+  },
+  {
+    "id": "kettle",
+    "name": "Electric kettle",
+    "replacePrice": 1500,
+    "recyclability": 0.85,
+    "applicableFlags": ["exposedWiring", "burningSmell"],
+    "symptoms": {
+      "power":        { "fixability": 0.5,  "repairCost": 1200, "repairMinutes": 45, "skill": 3 },
+      "physical":     { "fixability": 0.8,  "repairCost": 350,  "repairMinutes": 25, "skill": 2 },
+      "intermittent": { "fixability": 0.65, "repairCost": 400,  "repairMinutes": 30, "skill": 2 },
+      "cosmetic":     { "fixability": 0.95, "repairCost": 150,  "repairMinutes": 15, "skill": 1 }
+    },
+    "reuse": ["Use as a cold water pouring pitcher for houseplants"],
+    "repurpose": ["Repurpose the metal body into an indoor flower vase or herb planter"],
+    "dropOff": "Small appliance scrap metal drop-off point",
+    "repairPointer": "Local small appliance repair shop"
+  },
+  {
+    "id": "chair",
+    "name": "Desk chair",
+    "replacePrice": 4000,
+    "recyclability": 0.6,
+    "applicableFlags": [],
+    "symptoms": {
+      "power":        { "fixability": 0.45, "repairCost": 1600, "repairMinutes": 50, "skill": 3 },
+      "physical":     { "fixability": 0.85, "repairCost": 800,  "repairMinutes": 40, "skill": 2 },
+      "intermittent": { "fixability": 0.65, "repairCost": 600,  "repairMinutes": 30, "skill": 2 },
+      "cosmetic":     { "fixability": 0.9,  "repairCost": 350,  "repairMinutes": 20, "skill": 1 }
+    },
+    "reuse": ["Use as extra seating in a garage, workshop, or balcony"],
+    "repurpose": ["Detach base wheels to make a low rolling workshop creeper"],
+    "dropOff": "Bulky municipal recycling or furniture donation station",
+    "repairPointer": "Office furniture repair service or local upholsterer"
+  },
+  {
+    "id": "bicycle",
+    "name": "Bicycle",
+    "replacePrice": 9000,
+    "recyclability": 0.9,
+    "applicableFlags": [],
+    "symptoms": {
+      "power":        { "fixability": 0.55, "repairCost": 2200, "repairMinutes": 75, "skill": 3 },
+      "physical":     { "fixability": 0.85, "repairCost": 1500, "repairMinutes": 60, "skill": 2 },
+      "intermittent": { "fixability": 0.7,  "repairCost": 900,  "repairMinutes": 45, "skill": 2 },
+      "cosmetic":     { "fixability": 0.95, "repairCost": 500,  "repairMinutes": 30, "skill": 1 }
+    },
+    "reuse": ["Keep for neighborhood grocery runs or loaner bike for guests"],
+    "repurpose": ["Mount on a stationary magnetic resistance stand for indoor training"],
+    "dropOff": "Community bike kitchen or scrap metal recycler",
+    "repairPointer": "Local bicycle repair shop"
+  },
+  {
+    "id": "backpack",
+    "name": "Backpack",
+    "replacePrice": 1500,
+    "recyclability": 0.4,
+    "applicableFlags": [],
+    "symptoms": {
+      "power":        { "fixability": 0.4,  "repairCost": 450,  "repairMinutes": 45, "skill": 2 },
+      "physical":     { "fixability": 0.75, "repairCost": 300,  "repairMinutes": 30, "skill": 2 },
+      "intermittent": { "fixability": 0.6,  "repairCost": 200,  "repairMinutes": 25, "skill": 1 },
+      "cosmetic":     { "fixability": 0.9,  "repairCost": 120,  "repairMinutes": 15, "skill": 1 }
+    },
+    "reuse": ["Use for storing garage tools or dirty camping footwear"],
+    "repurpose": ["Cut up heavy-duty fabric and webbing for DIY tool organizers"],
+    "dropOff": "Textile recycling or charity donation bin",
+    "repairPointer": "Local tailor, cobbler, or bag repair service"
+  }
+]
