@@ -19,7 +19,9 @@ export default function Canvas() {
   const [activeCard, setActiveCard] = useState(null);
   const [rejectedZone, setRejectedZone] = useState(null);
   const [successZone, setSuccessZone] = useState(null);
-  const [showIntroHint, setShowIntroHint] = useState(true);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  const [guideDismissed, setGuideDismissed] = useState(false);
+  const [ghostPosition, setGhostPosition] = useState(null);
   const dragging = useRef(false);
   const touchMoveBlocker = useRef(null);
   const sensors = useSensors(
@@ -38,7 +40,41 @@ export default function Canvas() {
 
   useEffect(() => () => releaseTouchScrollBlock(), []);
 
+  useEffect(() => {
+    const media = window.matchMedia('(pointer: coarse)');
+    const updatePointerType = () => setIsCoarsePointer(media.matches);
+    updatePointerType();
+    media.addEventListener('change', updatePointerType);
+    return () => media.removeEventListener('change', updatePointerType);
+  }, []);
+
+  useEffect(() => {
+    if (guideDismissed || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    let timer;
+    const frame = window.requestAnimationFrame(() => {
+      const source = document.querySelector('[data-card-id="item-charger"]');
+      const target = document.querySelector('[data-zone-id="slot-item"]');
+      if (!source || !target) return;
+      const sourceRect = source.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const halfChip = window.innerWidth <= 420 ? 36 : 44;
+      setGhostPosition({
+        startX: sourceRect.left + sourceRect.width / 2 - halfChip,
+        startY: sourceRect.top + sourceRect.height / 2 - halfChip,
+        endX: targetRect.left + targetRect.width / 2 - halfChip,
+        endY: targetRect.top + targetRect.height / 2 - halfChip,
+      });
+      timer = window.setTimeout(() => setGhostPosition(null), 2500);
+    });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, [guideDismissed]);
+
   const handleDragStart = ({ active }) => {
+    setGuideDismissed(true);
+    setGhostPosition(null);
     dragging.current = true;
     const preventPageScroll = (event) => {
       if (dragging.current) event.preventDefault();
@@ -71,7 +107,6 @@ export default function Canvas() {
     }
     dispatch(makeCanvasAction(action, card.payload, { itemName: currentCategory?.name ?? 'item', state }));
     setSuccessZone(over.id);
-    setShowIntroHint(false);
     window.setTimeout(() => setSuccessZone(null), 380);
   };
 
@@ -83,13 +118,13 @@ export default function Canvas() {
   return (
     <DndContext sensors={sensors} modifiers={[centreOverlayOnPointer]} collisionDetection={pointerFirstCollision} autoScroll onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragCancel={handleDragCancel}>
       <div className="space-y-6">
-        {showIntroHint && <p className="rounded-lg border border-forest/20 bg-mint px-3 py-2 text-sm font-medium text-forest">No buttons here. Drag cards into the zones.</p>}
         <Tray rejectedZone={rejectedZone} successZone={successZone} isDragging={Boolean(activeCard)} />
-        <Workbench rejectedZone={rejectedZone} successZone={successZone} />
+        <Workbench rejectedZone={rejectedZone} successZone={successZone} isCoarsePointer={isCoarsePointer} emphasizeHint={!guideDismissed} />
         <ScorePanel rejectedZone={rejectedZone} successZone={successZone} isDragging={Boolean(activeCard)} />
         <p className="sr-only" aria-live="polite" aria-atomic="true">{state.liveMessage}</p>
       </div>
       <DragOverlay dropAnimation={null}>{activeCard && <div className="drag-preview-chip drag-preview-chip-active"><div className="drag-preview-label"><span className="drag-preview-initial">{activeCard.preview.label[0]}</span><span className="drag-preview-text">{activeCard.preview.label}</span></div>{activeCard.preview.score !== null && <span className="drag-preview-score">{activeCard.preview.score}</span>}</div>}</DragOverlay>
+      {ghostPosition && <div aria-hidden="true" className="drag-preview-chip first-visit-ghost" style={{ '--ghost-start-x': `${ghostPosition.startX}px`, '--ghost-start-y': `${ghostPosition.startY}px`, '--ghost-end-x': `${ghostPosition.endX}px`, '--ghost-end-y': `${ghostPosition.endY}px` }}><div className="drag-preview-label"><span className="drag-preview-initial">C</span><span className="drag-preview-text">Charger</span></div></div>}
     </DndContext>
   );
 }

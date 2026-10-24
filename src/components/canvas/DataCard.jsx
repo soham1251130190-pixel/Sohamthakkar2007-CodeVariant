@@ -62,6 +62,7 @@ export default function DataCard({
   return (
     <div
       ref={setNodeRef}
+      data-card-id={id}
       style={style}
       {...listeners}
       {...attributes}

@@ -9,14 +9,14 @@ function SlotCard({ type, payload, label, sublabel, variant }) {
   return <DataCard id={`slot-${type}-${payload}`} type={type} payload={payload} label={label} sublabel={sublabel} variant={variant} />;
 }
 
-export default function Workbench({ rejectedZone, successZone }) {
+export default function Workbench({ rejectedZone, successZone, isCoarsePointer, emphasizeHint }) {
   const { state, dispatch, currentCategory } = useCanvasContext();
   const flagLabels = state.flags.map((id) => safetyFlags.find((flag) => flag.id === id)?.label).filter(Boolean);
   const presetLabel = state.presetKey === 'lowBudget' ? 'Low budget' : state.presetKey === 'ecoFirst' ? 'Eco first' : 'Urgent';
 
   return (
     <section className="space-y-3">
-      <div><h2 className="text-xl font-bold text-forest">Workbench</h2><p className="text-sm text-muted">Build a card bundle, then drag it to Score it.</p></div>
+      <div><h2 className="text-xl font-bold text-forest">Workbench</h2><p className="text-sm text-muted">Build a card bundle, then drag it to Score it.</p><p className={`mt-1 text-xs ${emphasizeHint ? 'font-medium text-muted' : 'text-muted/70'}`}>{isCoarsePointer ? 'Press and hold a card, then drag it into the matching slot.' : 'Drag a card into the matching slot.'}</p></div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Zone id="slot-item" label="1. Item" hint="Drop an item card here" rejected={rejectedZone === 'slot-item'} success={successZone === 'slot-item'}>
           {currentCategory && <SlotCard type="item" payload={currentCategory.id} label={currentCategory.name} variant="item" />}

@@ -24,7 +24,7 @@ export default function Tray({ rejectedZone, successZone, isDragging }) {
         ))}
       </div>
 
-      {selectedItem && <RevealSection key={`problem-${state.itemId}`} revealKey={`problem-${state.itemId}`} revealedKeys={revealedKeys} isDragging={isDragging} caption="Item set. Now choose the problem." className="mt-4 border-t border-line pt-3">
+      {selectedItem && <RevealSection key={`problem-${state.itemId}`} revealKey={`problem-${state.itemId}`} revealedKeys={revealedKeys} isDragging={isDragging} caption="Item set. Now drag a problem card into its slot." className="mt-4 border-t border-line pt-3">
         {(animate) => <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted">What is the problem?</p>
           <StaggeredCards animate={animate} className="space-y-2">
@@ -41,7 +41,7 @@ export default function Tray({ rejectedZone, successZone, isDragging }) {
         </div>}
       </RevealSection>}
 
-      {selectedSymptom && state.intent !== 'unwanted' && <RevealSection key={`severity-${state.itemId}-${state.symptomId}`} revealKey={`severity-${state.itemId}-${state.symptomId}`} revealedKeys={revealedKeys} isDragging={isDragging} caption="Problem set. Choose severity." className="mt-4 border-t border-line pt-3">
+      {selectedSymptom && state.intent !== 'unwanted' && <RevealSection key={`severity-${state.itemId}-${state.symptomId}`} revealKey={`severity-${state.itemId}-${state.symptomId}`} revealedKeys={revealedKeys} isDragging={isDragging} caption="Problem set. Now drag a severity card into its slot." className="mt-4 border-t border-line pt-3">
         {(animate) => <StaggeredCards animate={animate} className="grid grid-cols-3 gap-2">
           {Object.keys(severity.fixability).map((id) => (
             <DataCard key={id} id={`severity-${id}`} type="severity" payload={id}
@@ -50,7 +50,7 @@ export default function Tray({ rejectedZone, successZone, isDragging }) {
         </StaggeredCards>}
       </RevealSection>}
 
-      {selectedItem && <RevealSection key={`choices-${state.itemId}`} revealKey={`choices-${state.itemId}`} revealedKeys={revealedKeys} isDragging={isDragging} caption="Choose safety flags and priorities." className="mt-4 border-t border-line pt-3">
+      {selectedItem && <RevealSection key={`choices-${state.itemId}`} revealKey={`choices-${state.itemId}`} revealedKeys={revealedKeys} isDragging={isDragging} caption="Drag safety flags or priorities into their matching slots." className="mt-4 border-t border-line pt-3">
         {(animate) => <div className="space-y-3">
           {currentCategory.applicableFlags.length > 0 && <>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">Safety flags</p>
