@@ -40,7 +40,7 @@ export default function Canvas() {
       dispatch({ type: 'SET_LIVE_MSG', payload: 'Add an item and a problem first' });
       return;
     }
-    dispatch(makeCanvasAction(action, card.payload, { itemName: currentCategory?.name ?? 'item' }));
+    dispatch(makeCanvasAction(action, card.payload, { itemName: currentCategory?.name ?? 'item', state }));
   };
 
   return (

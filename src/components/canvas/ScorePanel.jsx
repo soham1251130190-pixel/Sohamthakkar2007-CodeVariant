@@ -27,8 +27,14 @@ export default function ScorePanel({ rejectedZone }) {
         <Zone id="ruleOut" label="Rule out" hint={resultView.options.length > 1 ? 'Drop an option card here to remove it from the ranking' : 'Only one option remains'} rejected={rejectedZone === 'ruleOut'} disabled={resultView.options.length <= 1} />
         {ruledOutView.length > 0 && <section aria-label="Ruled out"><h2 className="text-lg font-bold text-forest">Ruled out</h2><div className="mt-2 flex flex-wrap gap-2">{ruledOutView.map((option) => <DataCard key={option.id} id={`ruled-out-${option.id}`} type="ruledOut" payload={option.id} label={`${option.label} ruled out`} sublabel="Drag to results to restore" variant="default" className="bg-slate-100 text-muted" />)}</div></section>}
         {planView && <PlanPanel plan={planView} />}
-        <HistoryTray entries={historyView} />
       </div>}
+      <section className="space-y-3 border-t border-line pt-4" aria-label="History actions">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Zone id="reopen" label="Reopen" hint={historyView.length > 0 ? 'Drop a history card here to restore it' : 'No history cards yet'} rejected={rejectedZone === 'reopen'} disabled={historyView.length === 0} />
+          <Zone id="delete" label="Delete" hint={historyView.length > 0 ? 'Drop a history card here to remove it' : 'No history cards yet'} rejected={rejectedZone === 'delete'} disabled={historyView.length === 0} />
+        </div>
+        <HistoryTray entries={historyView} />
+      </section>
     </section>
   );
 }

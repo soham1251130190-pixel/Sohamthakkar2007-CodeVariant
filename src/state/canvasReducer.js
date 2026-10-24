@@ -173,7 +173,7 @@ export function canvasReducer(state, action) {
       };
 
     case 'SET_PLAN': {
-      const { optionId, score, itemName } = action.payload;
+      const { optionId, score, itemName, snapshot } = action.payload;
       const entry = {
         id: `${Date.now()}-${optionId}`,
         itemName,
@@ -181,17 +181,18 @@ export function canvasReducer(state, action) {
         score,
         status: 'committed',
         time: new Date().toISOString(),
+        snapshot,
       };
       return {
         ...state,
-        plan: { optionId, timestamp: entry.time },
+        plan: { optionId, timestamp: entry.time, historyId: entry.id },
         history: [entry, ...state.history],
         liveMessage: `Plan committed to ${optionId}`,
       };
     }
 
     case 'SAVE_FOR_LATER': {
-      const { optionId, score, itemName } = action.payload;
+      const { optionId, score, itemName, snapshot } = action.payload;
       const entry = {
         id: `${Date.now()}-${optionId}`,
         itemName,
@@ -199,11 +200,47 @@ export function canvasReducer(state, action) {
         score,
         status: 'saved',
         time: new Date().toISOString(),
+        snapshot,
       };
       return {
         ...state,
         history: [entry, ...state.history],
         liveMessage: `${optionId} saved for later`,
+      };
+    }
+
+    case 'REOPEN_HISTORY': {
+      const entry = state.history.find((historyEntry) => historyEntry.id === action.payload);
+      if (!entry?.snapshot) return state;
+      const { item, problem, priorities, skillLevel } = entry.snapshot;
+      return {
+        ...state,
+        itemId: item.itemId,
+        price: item.price,
+        symptomId: problem.symptomId,
+        severity: problem.severity,
+        intent: problem.intent,
+        flags: [...problem.flags],
+        presetKey: priorities.presetKey,
+        skillLevel,
+        scored: true,
+        ruledOut: [],
+        plan: entry.status === 'committed'
+          ? { optionId: entry.bestOptionId, timestamp: entry.time, historyId: entry.id }
+          : state.plan,
+        liveMessage: `Reopened ${entry.itemName}`,
+      };
+    }
+
+    case 'DELETE_HISTORY': {
+      const entry = state.history.find((historyEntry) => historyEntry.id === action.payload);
+      if (!entry) return state;
+      const clearsCurrentPlan = entry.status === 'committed' && state.plan?.historyId === entry.id;
+      return {
+        ...state,
+        history: state.history.filter((historyEntry) => historyEntry.id !== entry.id),
+        plan: clearsCurrentPlan ? null : state.plan,
+        liveMessage: `Deleted ${entry.itemName}`,
       };
     }
 
