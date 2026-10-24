@@ -13,6 +13,7 @@ export const severity = {
 export const presets = {
   lowBudget: { budget: 70, time: 40, eco: 40, solves: 50 },
   urgent:    { budget: 20, time: 60, eco: 20, solves: 100 },
+  ecoFirst:  { budget: 30, time: 30, eco: 90, solves: 50 },
 };
 
 export const criteria = ['cost', 'effort', 'eco', 'solves'];

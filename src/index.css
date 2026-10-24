@@ -25,6 +25,16 @@
   }
 }
 
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@utility animate-shake {
+  animation: shake 320ms ease-in-out;
+}
+
 @theme {
   --color-forest: #0F5C4D;
   --color-amber: #E8A33D;

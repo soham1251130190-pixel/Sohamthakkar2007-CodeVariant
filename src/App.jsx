@@ -1,13 +1,13 @@
-import { AppProvider } from './state/AppContext.jsx';
+import { CanvasProvider } from './state/CanvasContext.jsx';
 import Layout from './components/Layout.jsx';
-import Wizard from './components/wizard/Wizard.jsx';
+import Canvas from './components/canvas/Canvas.jsx';
 
 export default function App() {
   return (
-    <AppProvider>
+    <CanvasProvider>
       <Layout>
-        <Wizard />
+        <Canvas />
       </Layout>
-    </AppProvider>
+    </CanvasProvider>
   );
 }
