@@ -75,6 +75,57 @@
   box-shadow: 0 12px 24px rgb(31 41 51 / 0.24);
 }
 
+.reveal-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms ease-out;
+}
+
+.reveal-stage.is-open .reveal-grid {
+  grid-template-rows: 1fr;
+}
+
+.reveal-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.reveal-content {
+  padding: 1px 0;
+}
+
+.reveal-stage.is-new.is-open {
+  animation: reveal-glow 750ms ease-out;
+}
+
+.reveal-caption {
+  margin-bottom: 0.75rem;
+  color: var(--color-forest);
+  font-size: 0.875rem;
+  font-weight: 600;
+  animation: reveal-caption 250ms ease-out both;
+}
+
+.reveal-card {
+  animation: reveal-card 250ms ease-out both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes reveal-card {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-caption {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes reveal-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(232 163 61 / 0); }
+  45% { box-shadow: 0 0 0 5px rgb(232 163 61 / 0.28); }
+}
+
 .drag-preview-label {
   display: flex;
   max-width: 100%;
@@ -129,6 +180,20 @@
   .animate-shake,
   .animate-drop-success {
     animation: feedback-flash 360ms ease-out;
+  }
+
+  .reveal-grid {
+    transition: none;
+  }
+
+  .reveal-stage.is-new.is-open,
+  .reveal-caption {
+    animation: none;
+  }
+
+  .reveal-card {
+    animation: reveal-caption 120ms ease-out both;
+    animation-delay: 0ms;
   }
 }
 

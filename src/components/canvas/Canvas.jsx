@@ -84,9 +84,9 @@ export default function Canvas() {
     <DndContext sensors={sensors} modifiers={[centreOverlayOnPointer]} collisionDetection={pointerFirstCollision} autoScroll onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragCancel={handleDragCancel}>
       <div className="space-y-6">
         {showIntroHint && <p className="rounded-lg border border-forest/20 bg-mint px-3 py-2 text-sm font-medium text-forest">No buttons here. Drag cards into the zones.</p>}
-        <Tray rejectedZone={rejectedZone} successZone={successZone} />
+        <Tray rejectedZone={rejectedZone} successZone={successZone} isDragging={Boolean(activeCard)} />
         <Workbench rejectedZone={rejectedZone} successZone={successZone} />
-        <ScorePanel rejectedZone={rejectedZone} successZone={successZone} />
+        <ScorePanel rejectedZone={rejectedZone} successZone={successZone} isDragging={Boolean(activeCard)} />
         <p className="sr-only" aria-live="polite" aria-atomic="true">{state.liveMessage}</p>
       </div>
       <DragOverlay dropAnimation={null}>{activeCard && <div className="drag-preview-chip drag-preview-chip-active"><div className="drag-preview-label"><span className="drag-preview-initial">{activeCard.preview.label[0]}</span><span className="drag-preview-text">{activeCard.preview.label}</span></div>{activeCard.preview.score !== null && <span className="drag-preview-score">{activeCard.preview.score}</span>}</div>}</DragOverlay>
