@@ -28,7 +28,7 @@ export default function DataCard({
   className = '',
   children,
 }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, isDragging } = useDraggable({
     id,
     data: { type, payload },
     disabled: dimmed,
@@ -38,12 +38,9 @@ export default function DataCard({
   const safeTransform = !isDragging && translated?.startsWith('translate3d') ? translated : undefined;
   const style = {
     transform: safeTransform,
-    touchAction: 'manipulation',
-    userSelect: 'none',
-    WebkitUserSelect: 'none',
-    WebkitTouchCallout: 'none',
+    touchAction: 'auto',
     opacity: isDragging ? 0.4 : dimmed ? 0.45 : 1,
-    cursor: dimmed ? 'not-allowed' : isDragging ? 'grabbing' : 'grab',
+    cursor: 'auto',
   };
 
   const variantStyles = {
@@ -63,10 +60,8 @@ export default function DataCard({
     <div
       ref={setNodeRef}
       style={style}
-      {...listeners}
-      {...attributes}
       aria-grabbed={isDragging}
-      className={`relative select-none rounded-xl border px-3 py-2.5 text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-forest ${isDragging ? 'border-dashed' : ''} ${base} ${className}`}
+      className={`relative rounded-xl border px-3 py-2.5 pr-14 text-sm transition-colors ${isDragging ? 'border-dashed' : ''} ${base} ${className}`}
     >
       {children ?? (
         <>
@@ -77,6 +72,17 @@ export default function DataCard({
           {badge && <div className="absolute top-1.5 right-1.5">{badge}</div>}
         </>
       )}
+      <span
+        ref={setActivatorNodeRef}
+        {...listeners}
+        {...attributes}
+        aria-label="Drag card"
+        tabIndex={0}
+        style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }}
+        className="absolute right-1 top-1/2 inline-grid h-11 w-11 -translate-y-1/2 cursor-grab touch-none select-none place-items-center rounded-lg bg-amber/25 text-lg font-bold text-forest transition-colors hover:bg-amber/40 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-forest active:cursor-grabbing"
+      >
+        <span aria-hidden="true">⠿</span>
+      </span>
     </div>
   );
 }

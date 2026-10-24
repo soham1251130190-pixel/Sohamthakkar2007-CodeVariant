@@ -23,8 +23,8 @@ export default function Canvas() {
   const dragging = useRef(false);
   const touchMoveBlocker = useRef(null);
   const sensors = useSensors(
-    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } }),
+    useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 60, tolerance: 8 } }),
     useSensor(KeyboardSensor),
   );
 
