@@ -22,7 +22,9 @@ export default function Workbench({ rejectedZone }) {
           {currentCategory && <SlotCard type="item" payload={currentCategory.id} label={currentCategory.name} variant="item" />}
         </Zone>
         <Zone id="slot-problem" label="2. Problem" hint="Drop a symptom card here" rejected={rejectedZone === 'slot-problem'}>
-          {state.symptomId && <SlotCard type="symptom" payload={state.symptomId} label={titleize(state.symptomId)} variant="problem" />}
+          {state.intent === 'unwanted'
+            ? <SlotCard type="unwanted" payload="unwanted" label="Unwanted item" sublabel="No repair problem" variant="problem" />
+            : state.symptomId && <SlotCard type="symptom" payload={state.symptomId} label={titleize(state.symptomId)} variant="problem" />}
         </Zone>
         <Zone id="slot-severity" label="3. Severity" hint="Drop a severity card here" rejected={rejectedZone === 'slot-severity'}>
           {state.severity && <SlotCard type="severity" payload={state.severity} label={titleize(state.severity)} variant="severity" />}
@@ -39,7 +41,7 @@ export default function Workbench({ rejectedZone }) {
           className="mt-1 block w-full rounded-lg border border-line px-3 py-2 text-ink" aria-label="Replacement price in rupees" />
       </label>}
       <DataCard id="bundle" type="bundle" payload={null} label="Your decision bundle"
-        sublabel={currentCategory ? `${currentCategory.name} · ${state.symptomId ? titleize(state.symptomId) : 'problem not set'} · ${presetLabel}` : 'Start by adding an item'}
+        sublabel={currentCategory ? `${currentCategory.name} · ${state.intent === 'unwanted' ? 'unwanted item' : state.symptomId ? titleize(state.symptomId) : 'problem not set'} · ${presetLabel}` : 'Start by adding an item'}
         variant="bundle" dimmed={!currentCategory} />
     </section>
   );

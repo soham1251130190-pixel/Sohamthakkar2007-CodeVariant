@@ -4,6 +4,7 @@ export const initialCanvasState = {
   itemId: null,       // string | null
   symptomId: null,    // string | null
   severity: null,     // 'minor' | 'moderate' | 'severe' | null
+  intent: 'damaged',
   flags: [],          // string[]
   presetKey: 'lowBudget',
   price: 2500,
@@ -26,6 +27,7 @@ export function canvasReducer(state, action) {
         // Clear downstream selections when item changes
         symptomId: null,
         severity: null,
+        intent: 'damaged',
         flags: [],
         scored: false,
         ruledOut: [],
@@ -44,10 +46,22 @@ export function canvasReducer(state, action) {
       return {
         ...state,
         symptomId: action.payload,
+        intent: 'damaged',
         severity: state.severity,
         scored: false,
         ruledOut: [],
         liveMessage: `Symptom set to ${action.payload}`,
+      };
+
+    case 'SET_UNWANTED':
+      return {
+        ...state,
+        intent: 'unwanted',
+        symptomId: null,
+        severity: null,
+        scored: false,
+        ruledOut: [],
+        liveMessage: 'Marked as unwanted — no repair problem selected',
       };
 
     case 'CLEAR_SYMPTOM':
@@ -55,6 +69,7 @@ export function canvasReducer(state, action) {
         ...state,
         symptomId: null,
         severity: null,
+        intent: 'damaged',
         scored: false,
         ruledOut: [],
         liveMessage: 'Symptom cleared',
@@ -204,14 +219,15 @@ export function canvasReducer(state, action) {
  * Derive the intent from state — damaged if a symptom is placed, else unwanted.
  */
 export function deriveIntent(state) {
-  return state.symptomId ? 'damaged' : 'unwanted';
+  return state.intent;
 }
 
 /**
  * Returns true if the workbench has enough data to score.
  */
 export function canScore(state) {
-  return Boolean(state.itemId && state.price > 0);
+  const hasDamagedProblem = Boolean(state.symptomId && state.severity);
+  return Boolean(state.itemId && state.price > 0 && (state.intent === 'unwanted' || hasDamagedProblem));
 }
 
 /**

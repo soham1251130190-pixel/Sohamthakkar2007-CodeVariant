@@ -24,13 +24,16 @@ export default function Tray({ rejectedZone }) {
       {selectedItem && (
         <div className="mt-4 space-y-3 border-t border-line pt-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted">What is the problem?</p>
+          <DataCard id="unwanted" type="unwanted" payload="unwanted" label="Unwanted item"
+            sublabel="There is no fault to fix; find its next use instead." variant="problem"
+            dimmed={state.intent === 'unwanted'} />
           <div className="grid gap-2 sm:grid-cols-2">
             {Object.entries(currentCategory.symptoms).map(([id]) => (
               <DataCard key={id} id={`symptom-${id}`} type="symptom" payload={id}
-                label={titleize(id)} variant="problem" dimmed={state.symptomId === id} />
+                label={titleize(id)} variant="problem" dimmed={state.symptomId === id || state.intent === 'unwanted'} />
             ))}
           </div>
-          {selectedSymptom && (
+          {selectedSymptom && state.intent !== 'unwanted' && (
             <div className="grid grid-cols-3 gap-2">
               {Object.keys(severity.fixability).map((id) => (
                 <DataCard key={id} id={`severity-${id}`} type="severity" payload={id}

@@ -10,6 +10,7 @@ export const dropRules = [
   // Workbench slots
   { cardType: 'item',     zoneId: 'slot-item',       action: 'SET_ITEM' },
   { cardType: 'symptom',  zoneId: 'slot-problem',    action: 'SET_SYMPTOM' },
+  { cardType: 'unwanted', zoneId: 'slot-problem',    action: 'SET_UNWANTED' },
   { cardType: 'severity', zoneId: 'slot-severity',   action: 'SET_SEVERITY' },
   { cardType: 'flag',     zoneId: 'slot-safety',     action: 'TOGGLE_FLAG' },
   { cardType: 'preset',   zoneId: 'slot-priorities', action: 'SET_PRESET' },
@@ -28,6 +29,7 @@ export const dropRules = [
   // Drag slot cards back to tray to clear them
   { cardType: 'item',     zoneId: 'tray',            action: 'CLEAR_ITEM' },
   { cardType: 'symptom',  zoneId: 'tray',            action: 'CLEAR_SYMPTOM' },
+  { cardType: 'unwanted', zoneId: 'tray',            action: 'CLEAR_SYMPTOM' },
   { cardType: 'severity', zoneId: 'tray',            action: 'CLEAR_SEVERITY' },
   { cardType: 'flag',     zoneId: 'tray',            action: 'TOGGLE_FLAG' },
   { cardType: 'preset',   zoneId: 'tray',            action: 'CLEAR_PRESET' },
