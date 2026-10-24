@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { resolveAction } from '../../config/canvas.js';
 import { useCanvasContext } from '../../state/useCanvasContext.js';
 import { canScore } from '../../state/canvasReducer.js';
+import { makeCanvasAction } from '../../engine/canvasActions.js';
 import ScorePanel from './ScorePanel.jsx';
 import Tray from './Tray.jsx';
 import Workbench from './Workbench.jsx';
 
 export default function Canvas() {
-  const { state, dispatch } = useCanvasContext();
+  const { state, dispatch, currentCategory } = useCanvasContext();
   const [activeCard, setActiveCard] = useState(null);
   const [rejectedZone, setRejectedZone] = useState(null);
   const sensors = useSensors(
@@ -39,7 +40,7 @@ export default function Canvas() {
       dispatch({ type: 'SET_LIVE_MSG', payload: 'Add an item and a problem first' });
       return;
     }
-    dispatch({ type: action, payload: card.payload });
+    dispatch(makeCanvasAction(action, card.payload, { itemName: currentCategory?.name ?? 'item' }));
   };
 
   return (

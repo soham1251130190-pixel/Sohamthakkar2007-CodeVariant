@@ -9,6 +9,7 @@ import itemsData from '../data/items.json';
 import { presets } from '../config/scoring.js';
 import { scoreItem } from '../engine/score.js';
 import { buildResultView } from '../engine/resultView.js';
+import { buildHistoryView, buildPlanView } from '../engine/planView.js';
 import { gates } from '../config/scoring.js';
 
 export function CanvasProvider({ children }) {
@@ -62,6 +63,13 @@ export function CanvasProvider({ children }) {
     [scoreResult, currentCategory]
   );
 
+  const planView = useMemo(
+    () => buildPlanView(state.plan, scoreResult, currentCategory, resultView?.notices.find((notice) => notice.type === 'safety')?.message ?? null),
+    [state.plan, scoreResult, currentCategory, resultView]
+  );
+
+  const historyView = useMemo(() => buildHistoryView(state.history), [state.history]);
+
   const value = useMemo(
     () => ({
       state,
@@ -69,9 +77,11 @@ export function CanvasProvider({ children }) {
       currentCategory,
       scoreResult,
       resultView,
+      planView,
+      historyView,
       rawScoreResult,
     }),
-    [state, currentCategory, scoreResult, resultView, rawScoreResult]
+    [state, currentCategory, scoreResult, resultView, planView, historyView, rawScoreResult]
   );
 
   return <CanvasContext.Provider value={value}>{children}</CanvasContext.Provider>;
