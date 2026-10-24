@@ -9,7 +9,7 @@ function SlotCard({ type, payload, label, sublabel, variant }) {
   return <DataCard id={`slot-${type}-${payload}`} type={type} payload={payload} label={label} sublabel={sublabel} variant={variant} />;
 }
 
-export default function Workbench({ rejectedZone }) {
+export default function Workbench({ rejectedZone, successZone }) {
   const { state, dispatch, currentCategory } = useCanvasContext();
   const flagLabels = state.flags.map((id) => safetyFlags.find((flag) => flag.id === id)?.label).filter(Boolean);
   const presetLabel = state.presetKey === 'lowBudget' ? 'Low budget' : state.presetKey === 'ecoFirst' ? 'Eco first' : 'Urgent';
@@ -18,21 +18,21 @@ export default function Workbench({ rejectedZone }) {
     <section className="space-y-3">
       <div><h2 className="text-xl font-bold text-forest">Workbench</h2><p className="text-sm text-muted">Build a card bundle, then drag it to Score it.</p></div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Zone id="slot-item" label="1. Item" hint="Drop an item card here" rejected={rejectedZone === 'slot-item'}>
+        <Zone id="slot-item" label="1. Item" hint="Drop an item card here" rejected={rejectedZone === 'slot-item'} success={successZone === 'slot-item'}>
           {currentCategory && <SlotCard type="item" payload={currentCategory.id} label={currentCategory.name} variant="item" />}
         </Zone>
-        <Zone id="slot-problem" label="2. Problem" hint="Drop a symptom card here" rejected={rejectedZone === 'slot-problem'}>
+        <Zone id="slot-problem" label="2. Problem" hint="Drop a symptom card here" rejected={rejectedZone === 'slot-problem'} success={successZone === 'slot-problem'}>
           {state.intent === 'unwanted'
             ? <SlotCard type="unwanted" payload="unwanted" label="Unwanted item" sublabel="No repair problem" variant="problem" />
             : state.symptomId && <SlotCard type="symptom" payload={state.symptomId} label={titleize(state.symptomId)} variant="problem" />}
         </Zone>
-        <Zone id="slot-severity" label="3. Severity" hint="Drop a severity card here" rejected={rejectedZone === 'slot-severity'}>
+        <Zone id="slot-severity" label="3. Severity" hint="Drop a severity card here" rejected={rejectedZone === 'slot-severity'} success={successZone === 'slot-severity'}>
           {state.severity && <SlotCard type="severity" payload={state.severity} label={titleize(state.severity)} variant="severity" />}
         </Zone>
-        <Zone id="slot-safety" label="4. Safety" hint="Drop applicable flags here" rejected={rejectedZone === 'slot-safety'}>
+        <Zone id="slot-safety" label="4. Safety" hint="Drop applicable flags here" rejected={rejectedZone === 'slot-safety'} success={successZone === 'slot-safety'}>
           <div className="space-y-2">{flagLabels.map((label, index) => <SlotCard key={label} type="flag" payload={state.flags[index]} label={label} variant="flag" />)}</div>
         </Zone>
-        <Zone id="slot-priorities" label="5. Priorities" hint="Drop a priority card here" rejected={rejectedZone === 'slot-priorities'} className="sm:col-span-2">
+        <Zone id="slot-priorities" label="5. Priorities" hint="Drop a priority card here" rejected={rejectedZone === 'slot-priorities'} success={successZone === 'slot-priorities'} className="sm:col-span-2">
           <SlotCard type="preset" payload={state.presetKey} label={presetLabel} sublabel="Your scoring weights" variant="preset" />
         </Zone>
       </div>

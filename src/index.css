@@ -35,6 +35,20 @@
   animation: shake 320ms ease-in-out;
 }
 
+@keyframes drop-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(15 92 77 / 0); }
+  45% { box-shadow: 0 0 0 7px rgb(15 92 77 / 0.24); }
+}
+
+@keyframes feedback-flash {
+  0%, 100% { background-color: rgb(234 244 241); }
+  50% { background-color: rgb(232 163 61 / 0.28); }
+}
+
+@utility animate-drop-success {
+  animation: drop-pulse 360ms ease-out;
+}
+
 .score-fill {
   transition: width 220ms ease-out;
 }
@@ -42,6 +56,11 @@
 @media (prefers-reduced-motion: reduce) {
   .score-fill {
     transition: none;
+  }
+
+  .animate-shake,
+  .animate-drop-success {
+    animation: feedback-flash 360ms ease-out;
   }
 }
 

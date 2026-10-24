@@ -6,13 +6,13 @@ import Zone from './Zone.jsx';
 
 const titleize = (value) => value[0].toUpperCase() + value.slice(1);
 
-export default function Tray({ rejectedZone }) {
+export default function Tray({ rejectedZone, successZone }) {
   const { state, currentCategory } = useCanvasContext();
   const selectedItem = Boolean(state.itemId);
   const selectedSymptom = Boolean(state.symptomId);
 
   return (
-    <Zone id="tray" label="Card tray" hint="Drag cards into matching workbench slots." rejected={rejectedZone === 'tray'}>
+    <Zone id="tray" label="Card tray" hint="Drag cards into matching workbench slots." rejected={rejectedZone === 'tray'} success={successZone === 'tray'}>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {items.map((item) => (
           <DataCard key={item.id} id={`item-${item.id}`} type="item" payload={item.id}

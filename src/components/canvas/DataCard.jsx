@@ -43,14 +43,14 @@ export default function DataCard({
   };
 
   const variantStyles = {
-    item:    'border-forest/40 bg-white text-ink hover:border-forest hover:bg-mint/30',
-    problem: 'border-amber/40 bg-white text-ink hover:border-amber hover:bg-amber/5',
-    severity:'border-line bg-white text-ink hover:border-forest',
-    flag:    'border-coral/40 bg-white text-ink hover:border-coral hover:bg-coral/5',
+    item:    'border-forest/40 bg-mint/30 text-ink hover:border-forest hover:bg-mint/60',
+    problem: 'border-forest/40 bg-mint/30 text-ink hover:border-forest hover:bg-mint/60',
+    severity:'border-forest/30 bg-mint/20 text-ink hover:border-forest',
+    flag:    'border-forest/40 bg-mint/30 text-ink hover:border-forest hover:bg-mint/60',
     preset:  'border-forest bg-forest text-white hover:bg-forest/90',
     bundle:  'border-forest bg-forest text-white shadow-md',
-    option:  'border-line bg-white text-ink hover:shadow-sm',
-    default: 'border-line bg-white text-ink hover:border-muted',
+    option:  'border-forest/25 bg-mint/20 text-ink hover:shadow-sm',
+    default: 'border-forest/25 bg-mint/20 text-ink hover:border-forest',
   };
 
   const base = variantStyles[variant] ?? variantStyles.default;
@@ -62,7 +62,7 @@ export default function DataCard({
       {...listeners}
       {...attributes}
       aria-grabbed={isDragging}
-      className={`relative select-none rounded-xl border px-3 py-2.5 text-sm transition-colors ${base} ${className}`}
+      className={`relative select-none rounded-xl border px-3 py-2.5 text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-forest ${isDragging ? 'border-amber bg-amber/15 ring-2 ring-amber/40' : ''} ${base} ${className}`}
     >
       {children ?? (
         <>
