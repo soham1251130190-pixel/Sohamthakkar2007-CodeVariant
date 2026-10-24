@@ -19,6 +19,14 @@ export const criteria = ['cost', 'effort', 'eco', 'solves'];
 
 export const options = ['repair', 'reuse', 'repurpose', 'replace', 'recycle'];
 
+export const optionConstants = {
+  repair:    { eco: 90, solvesFactor: 0.95, effortBase: 100, minutesFactor: 0.5, skillFactor: 20, gapFactor: 15 },
+  reuse:     { cost: 80, effort: 70, eco: 60, solves: 15, solvesUnwanted: 60 },
+  repurpose: { cost: 85, effort: 35, eco: 70, solves: 10, solvesUnwanted: 55 },
+  replace:   { costBase: 100, costPerRupee: 0.034, costMin: 5, costMax: 95, effort: 73, eco: 20, solves: 95 },
+  recycle:   { cost: 70, effort: 80, ecoFactor: 80, solves: 0 },
+};
+
 export const symptoms = [
   {
     id: 'power',

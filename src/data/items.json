@@ -6,7 +6,7 @@
     "recyclability": 0.7,
     "applicableFlags": ["exposedWiring"],
     "symptoms": {
-      "power":        { "fixability": 0.4, "repairCost": 1800, "repairMinutes": 90, "skill": 3 },
+      "power":        { "fixability": 0.76, "repairCost": 1800, "repairMinutes": 30, "skill": 2 },
       "physical":     { "fixability": 0.9, "repairCost": 300,  "repairMinutes": 20, "skill": 1 },
       "intermittent": { "fixability": 0.7, "repairCost": 400,  "repairMinutes": 30, "skill": 2 },
       "cosmetic":     { "fixability": 0.95,"repairCost": 100,  "repairMinutes": 10, "skill": 1 }
