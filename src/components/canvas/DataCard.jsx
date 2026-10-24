@@ -38,7 +38,10 @@ export default function DataCard({
   const safeTransform = !isDragging && translated?.startsWith('translate3d') ? translated : undefined;
   const style = {
     transform: safeTransform,
-    touchAction: 'none',
+    touchAction: 'manipulation',
+    userSelect: 'none',
+    WebkitUserSelect: 'none',
+    WebkitTouchCallout: 'none',
     opacity: isDragging ? 0.4 : dimmed ? 0.45 : 1,
     cursor: dimmed ? 'not-allowed' : isDragging ? 'grabbing' : 'grab',
   };

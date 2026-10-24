@@ -1,5 +1,5 @@
-import { DndContext, DragOverlay, KeyboardSensor, PointerSensor, TouchSensor, pointerWithin, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
-import { useState } from 'react';
+import { DndContext, DragOverlay, KeyboardSensor, MouseSensor, TouchSensor, pointerWithin, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
+import { useEffect, useRef, useState } from 'react';
 import { resolveAction } from '../../config/canvas.js';
 import { useCanvasContext } from '../../state/useCanvasContext.js';
 import { canScore } from '../../state/canvasReducer.js';
@@ -20,19 +20,39 @@ export default function Canvas() {
   const [rejectedZone, setRejectedZone] = useState(null);
   const [successZone, setSuccessZone] = useState(null);
   const [showIntroHint, setShowIntroHint] = useState(true);
+  const dragging = useRef(false);
+  const touchMoveBlocker = useRef(null);
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 8 } }),
+    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } }),
     useSensor(KeyboardSensor),
   );
 
+  const releaseTouchScrollBlock = () => {
+    if (touchMoveBlocker.current) {
+      window.removeEventListener('touchmove', touchMoveBlocker.current);
+      touchMoveBlocker.current = null;
+    }
+    dragging.current = false;
+  };
+
+  useEffect(() => () => releaseTouchScrollBlock(), []);
+
   const handleDragStart = ({ active }) => {
+    dragging.current = true;
+    const preventPageScroll = (event) => {
+      if (dragging.current) event.preventDefault();
+    };
+    touchMoveBlocker.current = preventPageScroll;
+    window.addEventListener('touchmove', preventPageScroll, { passive: false });
+    navigator.vibrate?.(10);
     setActiveCard({ id: active.id, ...active.data.current, preview: getDragPreview(active.data.current) });
     setRejectedZone(null);
     setSuccessZone(null);
   };
 
   const handleDragEnd = ({ active, over }) => {
+    releaseTouchScrollBlock();
     setActiveCard(null);
     if (!over) return;
     const card = active.data.current;
@@ -55,8 +75,13 @@ export default function Canvas() {
     window.setTimeout(() => setSuccessZone(null), 380);
   };
 
+  const handleDragCancel = () => {
+    releaseTouchScrollBlock();
+    setActiveCard(null);
+  };
+
   return (
-    <DndContext sensors={sensors} modifiers={[centreOverlayOnPointer]} collisionDetection={pointerFirstCollision} onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragCancel={() => setActiveCard(null)}>
+    <DndContext sensors={sensors} modifiers={[centreOverlayOnPointer]} collisionDetection={pointerFirstCollision} autoScroll onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragCancel={handleDragCancel}>
       <div className="space-y-6">
         {showIntroHint && <p className="rounded-lg border border-forest/20 bg-mint px-3 py-2 text-sm font-medium text-forest">No buttons here. Drag cards into the zones.</p>}
         <Tray rejectedZone={rejectedZone} successZone={successZone} />
@@ -64,7 +89,7 @@ export default function Canvas() {
         <ScorePanel rejectedZone={rejectedZone} successZone={successZone} />
         <p className="sr-only" aria-live="polite" aria-atomic="true">{state.liveMessage}</p>
       </div>
-      <DragOverlay dropAnimation={null}>{activeCard && <div className="drag-preview-chip"><div className="drag-preview-label"><span className="drag-preview-initial">{activeCard.preview.label[0]}</span><span className="drag-preview-text">{activeCard.preview.label}</span></div>{activeCard.preview.score !== null && <span className="drag-preview-score">{activeCard.preview.score}</span>}</div>}</DragOverlay>
+      <DragOverlay dropAnimation={null}>{activeCard && <div className="drag-preview-chip drag-preview-chip-active"><div className="drag-preview-label"><span className="drag-preview-initial">{activeCard.preview.label[0]}</span><span className="drag-preview-text">{activeCard.preview.label}</span></div>{activeCard.preview.score !== null && <span className="drag-preview-score">{activeCard.preview.score}</span>}</div>}</DragOverlay>
     </DndContext>
   );
 }

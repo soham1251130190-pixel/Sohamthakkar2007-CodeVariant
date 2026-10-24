@@ -71,6 +71,10 @@
   text-align: center;
 }
 
+.drag-preview-chip-active {
+  box-shadow: 0 12px 24px rgb(31 41 51 / 0.24);
+}
+
 .drag-preview-label {
   display: flex;
   max-width: 100%;
