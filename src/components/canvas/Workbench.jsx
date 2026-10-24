@@ -16,7 +16,7 @@ export default function Workbench({ rejectedZone, successZone }) {
 
   return (
     <section className="space-y-3">
-      <div><h2 className="text-xl font-bold text-forest">Workbench</h2><p className="text-sm text-muted">Build a card bundle, then drag it to Score it.</p><p className="mt-1 text-sm font-medium text-forest">Drag the ⠿ handle to move a card</p></div>
+      <div><h2 className="text-xl font-bold text-forest">Workbench</h2><p className="text-sm text-muted">Build a card bundle, then drag it to Score it.</p></div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Zone id="slot-item" label="1. Item" hint="Drop an item card here" rejected={rejectedZone === 'slot-item'} success={successZone === 'slot-item'}>
           {currentCategory && <SlotCard type="item" payload={currentCategory.id} label={currentCategory.name} variant="item" />}
