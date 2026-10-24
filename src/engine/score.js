@@ -21,7 +21,7 @@ function clamp(value, min = 0, max = 100) {
  * @param {number} [params.price] User replacement price
  * @param {Object} [params.priorities] Slider priorities { budget, time, eco, solves }
  * @param {string} [params.skillLevel] 'beginner' | 'comfortable' | 'advanced'
- * @returns {Object} { options, removed, notices, gap, confidence }
+ * @returns {Object} { options, removed, notices, gap, confidence, facts }
  */
 export function scoreItem({
   item,
@@ -244,5 +244,12 @@ export function scoreItem({
     notices,
     gap: scoreGap,
     confidence,
+    facts: {
+      repairCost,
+      ratio,
+      minutes,
+      skill: symptom?.skill ?? 1,
+      price: effectivePrice,
+    },
   };
 }

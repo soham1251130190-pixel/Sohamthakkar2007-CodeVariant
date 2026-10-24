@@ -65,21 +65,113 @@ export const optionTemplates = {
 export const { repair, reuse, repurpose, replace, recycle } = optionTemplates;
 
 export const whyTemplates = {
+  // Generic fallback per criterion
   cost: {
-    positive: 'Repair costs only {ratio}% of a replacement, saving you significant money.',
-    negative: 'Repair costs {ratio}% of replacement price, which is poor financial value.',
+    positive: 'Costs about {pct}% of a new {item}.',
+    negative: 'Repair would cost about {pct}% of a new one.',
   },
   effort: {
-    positive: 'Quick and easy to fix in roughly {minutes} minutes with moderate effort.',
-    negative: 'Demanding repair requiring around {minutes} minutes and specialized skill.',
+    positive: 'Quick fix: about {minutes} minutes, {skill} skill.',
+    negative: 'Needs about {minutes} minutes and {skill} skill.',
   },
   eco: {
-    positive: 'High environmental benefit by keeping materials in circulation and out of landfill.',
-    negative: 'Higher carbon footprint and resource consumption than circular alternatives.',
+    positive: 'Keeps the {item} out of the waste stream.',
+    negative: 'Adds e-waste and a new product’s footprint.',
   },
   solves: {
-    positive: 'Completely resolves the issue and restores full functionality.',
-    negative: 'Only partially addresses the problem, leaving ongoing limitations.',
+    positive: 'Restores it to normal use.',
+    negative: 'Won’t fix the original problem.',
+  },
+
+  // Option-specific templates
+  repair: {
+    cost: {
+      positive: 'Costs about {pct}% of a new {item}.',
+      negative: 'Repair would cost about {pct}% of a new one.',
+    },
+    effort: {
+      positive: 'Quick fix: about {minutes} minutes, {skill} skill.',
+      negative: 'Needs about {minutes} minutes and {skill} skill.',
+    },
+    eco: {
+      positive: 'Keeps the {item} out of the waste stream.',
+      negative: 'Higher carbon footprint than reusing as-is.',
+    },
+    solves: {
+      positive: 'Restores it to normal use.',
+      negative: 'May not fully fix it.',
+    },
+  },
+  reuse: {
+    cost: {
+      positive: 'Little or no cost, little effort.',
+      negative: 'Takes more effort than the winner.',
+    },
+    effort: {
+      positive: 'Little or no cost, little effort.',
+      negative: 'Takes more effort than the winner.',
+    },
+    eco: {
+      positive: 'Extends lifespan with zero manufacturing impact.',
+      negative: 'Lower environmental return than repairing.',
+    },
+    solves: {
+      positive: 'Still useful in a new role.',
+      negative: 'Won’t fix the original problem.',
+    },
+  },
+  repurpose: {
+    cost: {
+      positive: 'Little or no cost, little effort.',
+      negative: 'Takes more effort than the winner.',
+    },
+    effort: {
+      positive: 'Little or no cost, little effort.',
+      negative: 'Takes more effort than the winner.',
+    },
+    eco: {
+      positive: 'Repurposes materials creatively.',
+      negative: 'Takes more effort than the winner.',
+    },
+    solves: {
+      positive: 'Still useful in a new role.',
+      negative: 'Won’t fix the original problem.',
+    },
+  },
+  replace: {
+    cost: {
+      positive: 'Provides a reliable replacement under warranty.',
+      negative: 'Costs about {multiple}x more than repairing.',
+    },
+    effort: {
+      positive: 'Fast turnaround with no DIY troubleshooting needed.',
+      negative: 'Requires research and buying effort.',
+    },
+    eco: {
+      positive: 'Modern energy-efficient equipment.',
+      negative: 'Adds e-waste and a new product’s footprint.',
+    },
+    solves: {
+      positive: 'Gives you a fully working one.',
+      negative: 'Higher financial cost than repairing.',
+    },
+  },
+  recycle: {
+    cost: {
+      positive: 'Free or low-cost municipal drop-off.',
+      negative: 'Forfeits residual value.',
+    },
+    effort: {
+      positive: 'Straightforward drop-off at collection center.',
+      negative: 'Requires traveling to an e-waste center.',
+    },
+    eco: {
+      positive: 'Recovers materials responsibly.',
+      negative: 'Recycling has industrial processing energy costs.',
+    },
+    solves: {
+      positive: 'Recovers materials responsibly.',
+      negative: 'Gives up the item entirely.',
+    },
   },
 };
-

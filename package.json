@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "oxlint",
     "check:engine": "node scripts/check-engine.mjs",
+    "check:explain": "node scripts/check-explain.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
