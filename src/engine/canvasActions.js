@@ -13,5 +13,8 @@ export function makeCanvasAction(type, payload, { itemName } = {}) {
       },
     };
   }
+  if (type === 'RULE_OUT') {
+    return { type, payload: payload.id };
+  }
   return { type, payload };
 }

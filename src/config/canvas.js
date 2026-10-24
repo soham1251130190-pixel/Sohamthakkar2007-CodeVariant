@@ -23,6 +23,7 @@ export const dropRules = [
   { cardType: 'option',   zoneId: 'commit',          action: 'SET_PLAN' },
   { cardType: 'option',   zoneId: 'save',            action: 'SAVE_FOR_LATER' },
   { cardType: 'option',   zoneId: 'ruleOut',         action: 'RULE_OUT' },
+  { cardType: 'ruledOut', zoneId: 'results',         action: 'RESTORE_OPTION' },
   { cardType: 'history',  zoneId: 'reopen',          action: 'REOPEN_HISTORY' },
   { cardType: 'history',  zoneId: 'delete',          action: 'DELETE_HISTORY' },
 
@@ -59,6 +60,6 @@ export function acceptedTypes(zoneId) {
 export const ZONES = [
   'slot-item', 'slot-problem', 'slot-severity', 'slot-safety',
   'slot-priorities', 'score', 'clear', 'commit', 'save',
-  'ruleOut', 'reopen', 'delete', 'tray',
+  'ruleOut', 'results', 'reopen', 'delete', 'tray',
 ];
 

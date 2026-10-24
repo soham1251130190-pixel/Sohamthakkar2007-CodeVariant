@@ -43,3 +43,17 @@ export function buildResultView(result, { itemName = 'item' } = {}) {
     })),
   };
 }
+
+/** Prepares user-ruled-out options for their separate restore strip. */
+export function buildRuledOutView(ruledOutIds, rawResult) {
+  if (!rawResult) return [];
+  return ruledOutIds.map((id) => {
+    const option = rawResult.options.find((entry) => entry.id === id);
+    const template = optionTemplates[id] ?? {};
+    return {
+      id,
+      label: template.label ?? id,
+      score: option?.score ?? 0,
+    };
+  });
+}
