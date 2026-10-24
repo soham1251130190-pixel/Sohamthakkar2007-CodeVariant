@@ -35,6 +35,16 @@
   animation: shake 320ms ease-in-out;
 }
 
+.score-fill {
+  transition: width 220ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score-fill {
+    transition: none;
+  }
+}
+
 @theme {
   --color-forest: #0F5C4D;
   --color-amber: #E8A33D;

@@ -1,22 +1,20 @@
 import { useCanvasContext } from '../../state/useCanvasContext.js';
-import DataCard from './DataCard.jsx';
 import Zone from './Zone.jsx';
+import OptionCard from './OptionCard.jsx';
 
 export default function ScorePanel({ rejectedZone }) {
-  const { state, scoreResult } = useCanvasContext();
+  const { state, resultView } = useCanvasContext();
   return (
     <section className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
         <Zone id="score" label="Score it" hint="Drop your decision bundle here" rejected={rejectedZone === 'score'} className="border-amber bg-amber/10" />
         <Zone id="clear" label="Clear" hint="Drop the bundle here to start again" rejected={rejectedZone === 'clear'} />
       </div>
-      {state.scored && scoreResult && <div aria-live="polite" className="rounded-xl border border-line bg-mint/30 p-4">
-        <h2 className="text-xl font-bold text-forest">Current ranking</h2>
-        <ol className="mt-3 space-y-2">
-          {scoreResult.options.map((option, index) => <li key={option.id}>
-            <DataCard id={`option-${option.id}`} type="option" payload={option} label={`${index + 1}. ${option.id[0].toUpperCase()}${option.id.slice(1)} — ${option.score} / 100`} variant="option" />
-          </li>)}
-        </ol>
+      {state.scored && resultView && <div aria-live="polite" className="space-y-4">
+        {resultView.notices.map((notice) => <p key={notice.type} className={notice.type === 'safety' ? 'rounded-xl border border-coral bg-coral/15 px-4 py-3 text-sm font-semibold text-ink' : 'rounded-xl border border-line bg-slate-50 px-4 py-3 text-sm text-muted'}>{notice.message}</p>)}
+        {resultView.headline && <h2 className="text-2xl font-bold text-forest">{resultView.headline}</h2>}
+        <ol className="space-y-3">{resultView.options.map((option) => <li key={option.id}><OptionCard option={option} /></li>)}</ol>
+        {resultView.removed.length > 0 && <div className="flex flex-wrap gap-2" aria-label="Unavailable options">{resultView.removed.map((option) => <span key={option.id} className="rounded-full border border-line bg-slate-100 px-3 py-1.5 text-xs text-muted">{option.label}: not available, {option.reason}</span>)}</div>}
       </div>}
     </section>
   );

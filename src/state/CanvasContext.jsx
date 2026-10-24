@@ -8,6 +8,7 @@ import {
 import itemsData from '../data/items.json';
 import { presets } from '../config/scoring.js';
 import { scoreItem } from '../engine/score.js';
+import { buildResultView } from '../engine/resultView.js';
 import { gates } from '../config/scoring.js';
 
 export function CanvasProvider({ children }) {
@@ -56,15 +57,21 @@ export function CanvasProvider({ children }) {
     };
   }, [rawScoreResult, state.ruledOut]);
 
+  const resultView = useMemo(
+    () => buildResultView(scoreResult, { itemName: currentCategory?.name ?? 'item' }),
+    [scoreResult, currentCategory]
+  );
+
   const value = useMemo(
     () => ({
       state,
       dispatch,
       currentCategory,
       scoreResult,
+      resultView,
       rawScoreResult,
     }),
-    [state, currentCategory, scoreResult, rawScoreResult]
+    [state, currentCategory, scoreResult, resultView, rawScoreResult]
   );
 
   return <CanvasContext.Provider value={value}>{children}</CanvasContext.Provider>;
