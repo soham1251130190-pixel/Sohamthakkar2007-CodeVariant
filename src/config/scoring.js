@@ -65,3 +65,4 @@ export const skillLevels = {
   comfortable: 3,
   advanced: 5,
 };
+

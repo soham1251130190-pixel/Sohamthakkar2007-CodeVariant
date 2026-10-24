@@ -82,3 +82,4 @@ export const whyTemplates = {
     negative: 'Only partially addresses the problem, leaving ongoing limitations.',
   },
 };
+
