@@ -1,4 +1,4 @@
-import { DndContext, DragOverlay, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, DragOverlay, KeyboardSensor, PointerSensor, TouchSensor, pointerWithin, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import { resolveAction } from '../../config/canvas.js';
 import { useCanvasContext } from '../../state/useCanvasContext.js';
@@ -7,6 +7,12 @@ import { makeCanvasAction } from '../../engine/canvasActions.js';
 import ScorePanel from './ScorePanel.jsx';
 import Tray from './Tray.jsx';
 import Workbench from './Workbench.jsx';
+import { centreOverlayOnPointer, getDragPreview } from './dragPreview.js';
+
+function pointerFirstCollision(args) {
+  const pointerCollisions = pointerWithin(args);
+  return pointerCollisions.length > 0 ? pointerCollisions : rectIntersection(args);
+}
 
 export default function Canvas() {
   const { state, dispatch, currentCategory } = useCanvasContext();
@@ -21,7 +27,7 @@ export default function Canvas() {
   );
 
   const handleDragStart = ({ active }) => {
-    setActiveCard({ id: active.id, ...active.data.current });
+    setActiveCard({ id: active.id, ...active.data.current, preview: getDragPreview(active.data.current) });
     setRejectedZone(null);
     setSuccessZone(null);
   };
@@ -50,7 +56,7 @@ export default function Canvas() {
   };
 
   return (
-    <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragCancel={() => setActiveCard(null)}>
+    <DndContext sensors={sensors} modifiers={[centreOverlayOnPointer]} collisionDetection={pointerFirstCollision} onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragCancel={() => setActiveCard(null)}>
       <div className="space-y-6">
         {showIntroHint && <p className="rounded-lg border border-forest/20 bg-mint px-3 py-2 text-sm font-medium text-forest">No buttons here. Drag cards into the zones.</p>}
         <Tray rejectedZone={rejectedZone} successZone={successZone} />
@@ -58,7 +64,7 @@ export default function Canvas() {
         <ScorePanel rejectedZone={rejectedZone} successZone={successZone} />
         <p className="sr-only" aria-live="polite" aria-atomic="true">{state.liveMessage}</p>
       </div>
-      <DragOverlay>{activeCard && <div className="rounded-xl border border-amber bg-amber/15 px-3 py-2 text-sm font-semibold text-ink shadow-lg">Moving card</div>}</DragOverlay>
+      <DragOverlay dropAnimation={null}>{activeCard && <div className="drag-preview-chip"><div className="drag-preview-label"><span className="drag-preview-initial">{activeCard.preview.label[0]}</span><span className="drag-preview-text">{activeCard.preview.label}</span></div>{activeCard.preview.score !== null && <span className="drag-preview-score">{activeCard.preview.score}</span>}</div>}</DragOverlay>
     </DndContext>
   );
 }

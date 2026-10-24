@@ -34,12 +34,13 @@ export default function DataCard({
     disabled: dimmed,
   });
 
+  const translated = CSS.Translate.toString(transform);
+  const safeTransform = !isDragging && translated?.startsWith('translate3d') ? translated : undefined;
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: safeTransform,
     touchAction: 'none',
-    opacity: isDragging ? 0.35 : dimmed ? 0.45 : 1,
+    opacity: isDragging ? 0.4 : dimmed ? 0.45 : 1,
     cursor: dimmed ? 'not-allowed' : isDragging ? 'grabbing' : 'grab',
-    zIndex: isDragging ? 50 : undefined,
   };
 
   const variantStyles = {
@@ -62,7 +63,7 @@ export default function DataCard({
       {...listeners}
       {...attributes}
       aria-grabbed={isDragging}
-      className={`relative select-none rounded-xl border px-3 py-2.5 text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-forest ${isDragging ? 'border-amber bg-amber/15 ring-2 ring-amber/40' : ''} ${base} ${className}`}
+      className={`relative select-none rounded-xl border px-3 py-2.5 text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-forest ${isDragging ? 'border-dashed' : ''} ${base} ${className}`}
     >
       {children ?? (
         <>
