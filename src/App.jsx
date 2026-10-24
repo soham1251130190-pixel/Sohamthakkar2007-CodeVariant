@@ -47,7 +47,7 @@ export default function App() {
                   className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm bg-white border border-line text-ink"
                 >
                   <strong className="text-forest mr-1.5">{item.name}</strong>
-                  <span className="text-xs text-muted">₹{item.replacePrice.toLocaleString('en-IN')}</span>
+                  <span className="text-xs font-semibold text-ink">₹{item.replacePrice.toLocaleString('en-IN')}</span>
                 </span>
               ))}
             </div>
